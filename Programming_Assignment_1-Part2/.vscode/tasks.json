@@ -6,9 +6,11 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "main.cpp",
+                "Collection.cpp",
+                "Stress_ball.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "main"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

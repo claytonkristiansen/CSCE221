@@ -1,74 +1,43 @@
 #ifndef COLLECTION_H
 #define COLLECTION_H
-
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
 #include <string>
+#include <iostream>
+#include "Stress_ball.h"
 
-template<typename T>
-class Collection
-{
-private:
-    T* m_array;
-    size_t m_size;
-    size_t m_capacity;
+enum class Sort_choice{bubble_sort, insertion_sort, selection_sort};
+
+class Empty_Collection{};
+
+class Collection{
+    Stress_ball* array;
+    int size;
+    int capacity;
+    void resize();
 public:
     Collection();
-    Collection(size_t capacity);
-    Collection(Collection<T> &o);
+    Collection(int cap);
+    Collection(const Collection& c);
+    Collection& operator=(const Collection& c);
     ~Collection();
-
-    Collection<T> &operator=(Collection<T> &o)
-    {
-        m_size = o.m_size;
-        m_capacity = o.m_capacity;
-        m_array = o.m_array;
-    }
-
-    Collection(Collection<T>&& o)
-    {
-        m_size = o.m_size;
-        m_capacity = o.m_capacity;
-        m_array = o.m_array;
-        o.m_size = 0;
-        o.m_capacity = 0;
-        o.m_array = nullptr;
-    }
+    Collection(Collection&& c);
+    Collection& operator=(Collection&& c);
+    void insert_item(const Stress_ball& sb);
+    bool contains(const Stress_ball& sb) const;
+    Stress_ball remove_any_item();
+    void remove_this_item(const Stress_ball& sb);
+    void make_empty();
+    bool is_empty() const;
+    int total_items() const;
+    int total_items(Stress_ball_sizes s) const;
+    int total_items(Stress_ball_colors c) const;
+    void print_items() const;
+    Stress_ball& operator[](int i);
+    const Stress_ball& operator[](int i) const;
 };
 
-template<typename T>
-Collection<T>::Collection()
-{
-    m_size = 0;
-    m_capacity = 0;
-    m_array = nullptr;
-}
-
-template<typename T>
-Collection<T>::Collection(const size_t capacity)
-{
-    m_size = 0;
-    m_capacity = capacity;
-    m_array = new T[capacity];
-}
-
-template<typename T>
-Collection<T>::Collection(Collection<T> &o)
-{
-    m_size = o.m_size;
-    m_capacity = o.m_capacity;
-    m_array = o.m_array;
-}
-
-template<typename T>
-Collection<T>::~Collection()
-{
-    m_size = 0;
-    m_capacity = 0;
-    delete [] m_array;
-    m_array = nullptr;
-}
-
-
-#endif 
+istream& operator>>(istream& is, Collection& c);
+ostream& operator<<(ostream& os, const Collection& c);
+Collection make_union(const Collection& c1, const Collection& c2);
+void swap(Collection& c1, Collection& c2);
+void sort_by_size(Collection& c, Sort_choice sort);
+#endif
