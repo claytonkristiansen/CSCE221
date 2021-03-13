@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstddef>
+#include <iostream>
 #include "testables.h"
 /*
  * Testing Activity
@@ -92,6 +93,67 @@ void selection_sort(std::vector<int> & a) {
 long vec_product(const std::vector<int> & a) {
   SOME_CODE_3;
 }
+
+void PrintVector(const std::vector<int> vec)
+{
+  for(int i = 0; i < vec.size(); ++i)
+  {
+    std::cout << vec[i] << "\n";
+  }
+}
+
+
+int main()
+{
+  unsigned int test = 2;
+
+  std::vector<int> testVec;
+  
+  switch(test)
+  {
+    case 0:
+      testVec.push_back(10);
+      testVec.push_back(-30);
+      testVec.push_back(-21);
+      testVec.push_back(12);
+      testVec.push_back(43);
+      testVec.push_back(12); 
+      testVec.push_back(23);
+      testVec.push_back(34);
+      testVec.push_back(-100);
+      insertion_sort(testVec);
+      PrintVector(testVec);
+      std::cout << "\n\n";
+    break;
+
+    case 1:
+      testVec.push_back(10);
+      testVec.push_back(-30);
+      testVec.push_back(-21);
+      testVec.push_back(12);
+      testVec.push_back(43);
+      testVec.push_back(12); 
+      testVec.push_back(23);
+      testVec.push_back(34);
+      testVec.push_back(-100);
+      selection_sort(testVec);
+      PrintVector(testVec);
+      std::cout << "\n\n";
+    break;
+    
+    case 2:
+      testVec.push_back(10);
+      testVec.push_back(-30);
+      testVec.push_back(-21);
+      std::cout << vec_product(testVec); //Expected output currently 6300
+      std::cout << "\n\n";        
+    break;
+    
+  }
+}
+
+
+
 
 /* IGNORE BELOW */
 #pragma GCC diagnostic pop

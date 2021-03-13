@@ -71,11 +71,30 @@ bool foo(std::vector<int> v1, std::vector<int> v2)
     return false;
 }
 
+int num_comp = 0;
+int search_algorithm(std::vector<int> &v, int x) { 
+    int m, i = 0;
+    int j = v.size()-1;
+    while (i < j) {
+      m = (i+j)/2;
+      if (num_comp++, v[m] < x) i = m+1;
+      else j = m;
+    }
+    if (num_comp++, x == v[i]) return i; //found
+}
 
 int main()
 {
   // test this program
-  int total_elem[]= {1, 2, 4, 64, 1024};
-  for (int i = 0; i < 5; i++)
-    add_elements(1, total_elem[i]);
+//   int total_elem[]= {1, 2, 4, 64, 1024};
+//   for (int i = 0; i < 5; i++)
+//     add_elements(1, total_elem[i]);
+    std::vector<int> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(6);
+    vec.push_back(7);
+    vec.push_back(12);
+    search_algorithm(vec, 6);
+    std::cout << num_comp;
 }
