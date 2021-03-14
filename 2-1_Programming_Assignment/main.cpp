@@ -5,9 +5,14 @@
 
 using namespace std;
 
+
+
 int main() {
     Record rec;
     vector<Record> vec;
+
+
+
 
     // Attempt to open the file, exit on error
     ifstream ifs("Book.txt");

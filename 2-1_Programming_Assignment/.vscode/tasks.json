@@ -6,10 +6,12 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "TDLList-main.cpp",
+                "Library-main.cpp",
+                "Record.cpp",
                 "DLList.cpp",
+                "Library.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/main"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

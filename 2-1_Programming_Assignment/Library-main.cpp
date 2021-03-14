@@ -8,6 +8,26 @@ using namespace std;
 
 int main() {
     Library library;
+
+    // Record recTest1, recTest2;
+    // recTest1.set_title("Harry Potter And The Cursed Child");
+    // recTest1.set_author("J. K. Rowling");
+    // recTest1.set_ISBN("978-1338099133");
+    // recTest1.set_year("2000");
+    // recTest1.set_edition("1st edition");
+    // recTest2.set_title("Harry Potter And The Carsed Child");
+    // recTest2.set_author("J. K. Rowling");
+    // recTest2.set_ISBN("978-1338099133");
+    // recTest2.set_year("2016");
+    // recTest2.set_edition("1st edition");
+    
+    // library.add_record(recTest1);
+    // library.add_record(recTest2);
+    // library.add_record(recTest2);
+    
+    // library.print_database();
+    // library.export_database("export.txt");
+
     
     // Loop until option to exit
     int option = -1;

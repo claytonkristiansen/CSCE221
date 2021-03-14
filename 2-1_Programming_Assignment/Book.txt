@@ -58,5 +58,3 @@ Stuart Russell, Peter Norvig
 978-0136042594
 2009
 3rd edition
-
-     

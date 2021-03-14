@@ -39,8 +39,6 @@ DLList::DLList(DLList&& dll) // move constructor
 
     dll.header.next = &dll.trailer;
     dll.trailer.prev = &dll.header;
-    
-    
 } 
 DLList::~DLList() // destructor
 {
