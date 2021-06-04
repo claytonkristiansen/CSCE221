@@ -17,28 +17,26 @@ void Record::set_edition(string edition) { this->edition = edition; }
 
 std::istream& operator>>(std::istream& is, Record& rec)
 {
-    if(!is.eof())
+    string title = "";
+    string author = "";
+    string ISBN = "";
+    string year = "";
+    string edition = "";
+    std::getline(is, title);
+    while(title == "" && !is.eof())
     {
-        string title = "";
-        string author = "";
-        string ISBN = "";
-        string year = "";
-        string edition = "";
-        if(!is.eof()) std::getline(is, title);
-        while(title == "" && !is.eof())
-        {
-            if(!is.eof()) std::getline(is, title);
-        }
-        if(!is.eof()) std::getline(is, author);
-        if(!is.eof()) std::getline(is, ISBN);
-        if(!is.eof()) std::getline(is, year);
-        if(!is.eof()) std::getline(is, edition);
-        rec.set_title(title);
-        rec.set_author(author);
-        rec.set_ISBN(ISBN);
-        rec.set_year(year);
-        rec.set_edition(edition);
+        std::getline(is, title);
     }
+    std::getline(is, author);
+    std::getline(is, ISBN);
+    std::getline(is, year);
+    std::getline(is, edition);
+    rec.set_title(title);
+    rec.set_author(author);
+    rec.set_ISBN(ISBN);
+    rec.set_year(year);
+    rec.set_edition(edition);
+    
     return is;
 }
 std::ostream& operator<<(std::ostream& os, Record& rec)

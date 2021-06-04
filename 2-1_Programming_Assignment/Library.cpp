@@ -68,11 +68,9 @@ int Library::import_database(std::string filename)
 
     
     int count = 0;
-
-    while(!ifs.eof())
+    Record rec;
+    while(ifs >> rec)
     {
-        Record rec;
-        ifs >> rec;
         bool added = this->add_record(rec);
         if(added) {++count;}
     }

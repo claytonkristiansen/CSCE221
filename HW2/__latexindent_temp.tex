@@ -1,0 +1,530 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Homework Two -- Latex Template:
+%%% Tested against the pdflatex compiler
+%%%
+
+\documentclass[english]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document Preamble
+%%% - contains the external content (packages) and formatting settings
+%%% - modification should be unnecessary unless you want to add additional
+%%%   functionality or change the aesthetics
+
+%%% Hyperref: insert links
+% See: https://www.overleaf.com/learn/latex/Hyperlinks
+\usepackage[unicode=true]{hyperref}
+
+%%% Hyperref: links should appear blue as you would expect
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  filecolor=blue,
+}
+
+%%% Listings: use to include code in your solutions
+% See: https://www.overleaf.com/learn/latex/Code_listing
+\usepackage{listings}
+
+%%% Listings: setup defaults for code formatting
+\lstset{
+  language={C++},
+  frame=tb,
+  numbers=left,
+  numberstyle=\tiny,
+  basicstyle=\small\sffamily,
+  breaklines=true,
+}
+
+%%% GraphicX: insert images (e.g. screenshots) into the document
+% See: https://www.overleaf.com/learn/latex/Inserting_Images
+\usepackage{graphicx}
+
+%%% Float: Allows the use of the H specifier in images to force them in place
+\usepackage{float}
+
+
+%%% Enumitem: alphabetic enumerations with improved syntax
+% E.g.
+% (a) ...
+% (b) ...
+\usepackage[shortlabels]{enumitem}
+
+
+%%% AMS Math: access to math environments alike align
+% Aligning: https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath 
+\usepackage{amsmath}
+
+% Additional options when using tables
+\usepackage{array}
+
+%%% Custom commands
+
+\newcounter{problemi}
+\setcounter{problemi}{1}
+
+\newcommand*{\headfont}{\fontsize{1.1em}{1.0em}\selectfont}
+
+
+\newcommand\problem[1]{
+  \noindent{\headfont\\\theproblemi. #1}\\
+  \stepcounter{problemi}\smallskip
+}
+
+\newcommand*{\code}[1]{\texttt{#1}}
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COVER PAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{centering}
+    {\Large CSCE 221 Cover Page} \\ \medskip    
+\end{centering}
+
+Please list all sources in the table below including web pages which you used to solve or implement the current homework. If you fail to cite sources you can get a lower number of points or even zero, read more Aggie Honor System Office \url{https://aggiehonor.tamu.edu/} \\
+
+% EDIT: the below information appropriately
+\noindent
+\begin{center}
+    {\large
+    \begin{tabular}{|p{0.35\linewidth}|p{0.45\linewidth}|} \hline
+        Name          & Clayton Kristiansen         \\ \hline
+        UIN           & 328003173         \\ \hline
+        Email address & kristiansenc@tamu.edu      \\ \hline
+    \end{tabular}
+    }
+\end{center}
+
+Cite your sources using the table below. Interactions with TAs and resources presented in lecture do not have to be cited.
+\noindent
+\begin{center}
+    {\large
+    \begin{tabular}{|>{\centering\arraybackslash}m{0.25\linewidth}|m{0.70\textwidth}|} \hline
+        {\large People}            &
+            \begin{enumerate}
+                % EDIT
+                % People: Add sources below as items
+                \item None
+            \end{enumerate}
+        \\ \hline
+        {\large Webpages}          & 
+            \begin{enumerate}
+                % EDIT
+                % Webpages: Add sources below as items
+                \item None
+            \end{enumerate}
+        \\ \hline
+        {\large Printed Materials} &
+            \begin{enumerate}
+                % EDIT
+                % Printed Material: Add sources below as items
+                \item None
+            \end{enumerate}
+        \\ \hline
+        {\large Other Sources}     &
+            \begin{enumerate}
+                % EDIT
+                % Other sources: Add sources below as items
+                \item None
+            \end{enumerate}
+        \\ \hline
+    \end{tabular}
+    }
+\end{center}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HOMEWORK TWO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{centering}
+    {\Huge Homework 2}\\ \bigskip
+    {\Large Due March 25 at 11:59 PM}\\ \bigskip
+\end{centering}
+
+\textbf{Typeset your solutions to the homework problems preferably in \LaTeX or LyX.
+See the class webpage for information about their installation and tutorials.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points)
+Provided two sorted lists, \code{l1} and \code{l2}, write a function in C++ to \emph{efficiently} compute \code{l1 $\cap$ l2} using only the basic STL list operations. The lists may be empty or contain a different number of elements e.g $|\code{l1}| \neq |\code{l2}|$. You may assume \code{l1} and \code{l2} will not contain duplicate elements.
+}
+
+\noindent Examples (all set members are list node):
+\begin{itemize}
+  \item $\{1, 2, 3, 4\} \cap \{2, 3\} = \{2, 3\}$
+  \item $\emptyset \cap \{2, 3\} = \emptyset$
+  \item $\{2, 9, 14\} \cap \{1, 7, 15\} = \emptyset$
+\end{itemize}
+
+\bigskip
+
+\begin{enumerate}[(a)]
+  \item Complete the function below. Do not use any routines from the algorithm header file.
+
+\begin{lstlisting}
+#include <list>
+
+std::list<int> intersection(const std::list<int> & l1, const std::list<int> & l2) 
+{
+    std::list<int> l3;
+    
+    std::list<int>::const_iterator el1 = l1.begin();
+    std::list<int>::const_iterator el2 = l2.begin();
+
+    while(el1 != l1.end())
+    {
+        el2 = l2.begin();
+        while(el2 != l2.end())
+        {
+            if(*el1 == *el2)
+            {
+                l3.push_back(*el1);
+            }
+            el2++;
+        }
+        el1++;
+    }
+
+    return l3;
+}
+\end{lstlisting}
+
+  \item Verify that your implementation works properly by writing two test cases. Provide screenshot(s) with the results of your testing.
+
+\begin{lstlisting}
+int main()
+{
+    std::list<int> l1;
+    std::list<int> l2;
+    l1.push_back(2);
+    l1.push_back(3);
+    l1.push_back(7);
+    l1.push_back(8);
+    l1.push_back(6);
+    l2.push_back(1);
+    l2.push_back(2);
+    l2.push_back(3);
+    l2.push_back(7);
+    std::cout << "TEST CASE 1:\n";
+    intersection(l1, l2);
+    l1.clear();
+    l2.clear();
+    l1.push_back(1);
+    l1.push_back(2);
+    l1.push_back(3);
+    l1.push_back(4);
+    l1.push_back(5);
+    l1.push_back(6);
+    l1.push_back(7);
+    l1.push_back(7);
+    l1.push_back(8);
+    l1.push_back(10);
+    l2.push_back(5);
+    l2.push_back(4);
+    l2.push_back(3);
+    l2.push_back(8);
+    std::cout << "\n\n\nTEST CASE 2:\n";
+    intersection(l1, l2);
+}
+\end{lstlisting}
+
+  \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.8\linewidth]{1-tests.png}
+     \caption{Results of testing the \code{intersection} function}%
+     \label{fig:intersection_tests}
+  \end{figure}  
+
+  \item What is the running time of your algorithm? Provide a big-O bound. Justify.
+
+  \begin{equation}
+    f(n) \in O(n^2)
+  \end{equation}
+  
+  Assuming n is the max of the two set sizes:
+  % You may also want a derivation in your justification
+  \begin{align}
+    f(n) &= 3n^2 + 3n + 3 \\
+         &= n^2
+  \end{align}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points)
+  Write a C++ recursive function that counts the number of nodes in a singly linked list. Do not modify the list.
+}
+
+Examples:
+\begin{itemize}
+  \item \code{count\_nodes($ (2) \rightarrow (4) \rightarrow (3) \rightarrow \text{nullptr}$)} = 3
+  \item \code{count\_nodes($\text{nullptr}$)} = 0
+\end{itemize}
+
+\bigskip
+
+\begin{enumerate}[(a)]
+  \item Complete the function below:
+  \label{enum:recursive_node_imp}
+
+\begin{lstlisting}
+template <typename T>
+struct Node
+{
+    Node *next;
+    T obj;
+
+    Node(T obj, Node *next = nullptr)
+        : obj(obj), next(next)
+    { }
+};
+
+template <typename T>
+int count_nodes(Node<T>* n)
+{
+    while(n->next != nullptr)
+    {
+        return 1 + count_nodes(n->next);
+    }
+    return 1;
+}
+\end{lstlisting}
+
+  \item Verify that your implementation works properly by writing two test cases for the function you completed in part \ref{enum:recursive_node_imp}. Provide screenshot(s) with the results of your testing.
+
+    
+
+  \item Write a recurrence relation that represents your algorithm.
+  
+  \begin{equation}
+    T(n) = \begin{cases}
+      T(n - 1) + O(1), & \text{if } n > 1 \\
+      O(1), & \text{if } n = 1
+    \end{cases} 
+  \end{equation}
+  \begin{equation}
+    T(0) = 1
+  \end{equation}
+
+  \item Solve the recurrence relation using the iterating or recursive tree method to obtain the running time of the algorithm in Big-O notation.
+
+  You may want to embed an image. If so, use a figure code block.
+  \begin{align}
+    T(n) &= T(n - 1) + O(1) \\
+         &= T(n - 2) + 2 * O(1) \\
+         &= T(n - 3) + 3 * O(1) \\
+         &= T(n - 4) + 4 * O(1) \\
+         &\cdots \\
+         &= T(n - n) + n * O(1) \\ 
+         &= T(0) + n * O(1) \\
+         &= 1 + n * O(1) \\
+         &= O(n) 
+  \end{align}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points)
+  Write a C++ recursive function that finds the maximum value in an array 
+  (or vector) of integers \emph{without} using any loops. You may assume the
+  array will always contain at least one integer. Do not modify the array.
+}
+
+\begin{enumerate}[(a)]
+  \item Complete the function below:
+
+\begin{lstlisting}
+#include <vector>
+
+int find_max_value(/* args */) {
+	// code
+}
+
+\end{lstlisting}
+
+  \item Verify that your implementation works properly by writing two test cases. Provide screenshot(s) with the results of the tests.
+
+  % \begin{figure}[H]
+  %   \centering
+  %   \includegraphics[width=0.5\linewidth]{image.jpg}
+  %   \caption{Results of testing the \code{find\_max\_value} function}%
+  %   \label{fig:find_max_value}
+  % \end{figure}  
+
+  \item Write a recurrence relation that represents your algorithm.
+
+  % \begin{equation}
+  %   T(n) = \begin{cases}
+  %     \cdots, & \text{if } \cdots \\
+  %     \cdots, & \text{if } \cdots
+  %   \end{cases}
+  % \end{equation}
+
+  \item Solve the recurrence relation and obtain the running time of the algorithm in Big-O notation. Show your process.
+
+  % You may want to embed an image. If so, use a figure code block.
+  % \begin{align}
+  %   T(n) &= \cdots \\
+  %        &= \cdots
+  % \end{align}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points) 
+  What is the best, worst and average running time of quick sort algorithm?
+}
+
+\begin{enumerate}[(a)]
+  % QUESTION: Do they need to solve them?
+  \item Provide recurrence relations. For the average case, you may assume that quick sort partitions the input into two halves proportional to $c$ and $1 - c$ on each iteration.
+  \label{enum:recurrence_relation}
+
+  % Best:
+  % \begin{equation}
+  %   T(n) = \begin{cases}
+  %     \cdots, & \text{if } \cdots \\
+  %     \cdots, & \text{if } \cdots
+  %   \end{cases}
+  % \end{equation}
+
+  % Average:
+  % \begin{equation}
+  %   T(n) = \begin{cases}
+  %     \cdots, & \text{if } \cdots \\
+  %     \cdots, & \text{if } \cdots
+  %   \end{cases}
+  % \end{equation}
+  
+  % Worst:
+  % \begin{equation}
+  %   T(n) = \begin{cases}
+  %     \cdots, & \text{if } \cdots \\
+  %     \cdots, & \text{if } \cdots
+  %   \end{cases}
+  % \end{equation}
+
+  \item Solve each recurrence relation you provided in part \ref{enum:recurrence_relation}
+
+  % You may want to include an image using the figure environment and solve it on paper
+  % You could also use the align environment to typeset math
+  % \begin{figure}[H]
+  %   \centering
+  %   \includegraphics[width=0.5\linewidth]{image.jpg}
+  %   \caption{Solution to recurrence relations}%
+  %   \label{fig:recurrence_solution}
+  % \end{figure}  
+
+  \item Provide an arrangement of the input array which results in each case. Assume the first item is always chosen as the pivot for each iteration.
+
+    % \begin{table}[H]
+    %   \centering
+    %   \begin{tabular}{c c}
+    %     Best    & $\{ \cdots \}$ \\
+    %     Average & $\{ \cdots \}$ \\
+    %     Worst   & $\{ \cdots \}$ 
+    %   \end{tabular}
+    % \end{table}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points)
+  Write a C++ function that counts the total number of nodes with two children in a 
+  binary tree (do not count nodes with one or none child). You can use a STL container 
+  if you need to use an additional data structure to solve this problem. 
+}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\linewidth]{./binary_tree_example.png}
+  \caption{Calling \code{count\_filled\_nodes} on the root node F returns \code{3}}%
+  \label{fig:binary_tree_example}
+\end{figure}
+
+\begin{enumerate}[(a)]
+  \item Complete the function below. The function will be called with the root node (e.g. \code{count\_filled\_nodes(root)}). The tree may be empty. Do not modify the tree.
+
+\begin{lstlisting}
+#include <vector>
+
+template<typename T>
+struct Node {
+  Node<T> *left, *right;
+  T obj;
+
+  Node(T obj, Node<T> * left = nullptr, Node<T> * right = nullptr)
+    : obj(obj), left(left), right(right)
+  { }
+};
+
+template<typename T>
+int count_filled_nodes(const Node<T> * node) {
+	// code
+}
+
+\end{lstlisting}
+
+  \item Use big-O notation to classify your algorithm. Show how you arrived at your answer.
+
+  % \begin{equation}
+  %   f(n) \in O(\cdots)
+  % \end{equation}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(15 points)
+  For the following statements about red-black trees, provide a justification for each 
+  true statement and a counterexample for each false one.
+}
+
+\begin{enumerate}[(a)]
+  \item A subtree of a red-black tree is itself a red-black tree.
+	
+
+  \item The sibling of an external node is either external or red.
+
+
+  \item There is a unique 2-4 tree associated with a given red-black tree.
+
+
+  \item There is a unique red-black tree associated with a given 2-4 tree.
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem{(10 points)
+  Modify this skip list after performing the following series of operations: \code{erase(38)}, 
+  \code{insert(48,x)}, \code{insert(24, y)}, \code{erase(42)}. Provided the recorded coin flips 
+  for \code{x} and \code{y}. Provide a record of your work for partial credit.
+}
+
+\begin{tabular}{ccccccccccccc}
+$-\infty$ &  & ----- &  & ----- &  & ----- &  & ----- &  & ----- &  & $+\infty$\tabularnewline
+          &  &       &  &       &  &       &  &       &  &       &  & \tabularnewline
+$-\infty$ &  & ----- &  & 17    &  & ----- &  & ----- &  & ----- &  & $+\infty$\tabularnewline
+          &  &       &  &       &  &       &  &       &  &       &  & \tabularnewline
+$-\infty$ &  & ----- &  & 17    &  & ----- &  & ----- &  & 42    &  & $+\infty$\tabularnewline
+          &  &       &  &       &  &       &  &       &  &       &  & \tabularnewline
+$-\infty$ &  & ----- &  & 17    &  & ----- &  & ----- &  & 42    &  & $+\infty$\tabularnewline
+          &  &       &  &       &  &       &  &       &  &       &  & \tabularnewline
+$-\infty$ &  & 12    &  & 17    &  & ----- &  & 38    &  & 42    &  & $+\infty$\tabularnewline
+          &  &       &  &       &  &       &  &       &  &       &  & \tabularnewline
+$-\infty$ &  & 12    &  & 17    &  & 20    &  & 38    &  & 42    &  & $+\infty$\tabularnewline
+\end{tabular} \bigskip
+
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.5\linewidth]{./image.jpg}
+% \end{figure}
+
+\end{document}

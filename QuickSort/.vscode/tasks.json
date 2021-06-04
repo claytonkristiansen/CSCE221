@@ -6,7 +6,7 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "quicksort.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
